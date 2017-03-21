@@ -1,0 +1,51 @@
+<!--
+    Spring Boot 通过 org.springframework.boot.autocofigure.thymeleaf 包对 Thymeleaf 进行了自动配置
+    根据默认原则，脚本样式、图片等静态资源应该防止在 src/main/resources/static 下
+-->
+
+<!--
+    JSP 在内嵌的 Servlet 容器上运行会有一些问题  内嵌的 Tomcat jetty 不支持以 jar 形式运行 JSP,Undertow 不支持 JSP
+    SpringBoot 提供了大量的模板引擎 包含有：FreeMaker， Groovy，Thymeleaf，Velocity 和 Mustache ,
+    SpringBoot 推荐使用 Thymeleaf 作为模板引擎，因为 Thymeleaf 提供了完美的 Spring MVC 的支持
+    Thymeleaf 是一个 Java 类库，他是一个 xml/xhtml/html5 的模板引擎，可以作为 MVC 的 Web 应用的 View 层
+    Thymeleaf 还提供了额外的模块与 Spring MVC 集成，所以我们可以使用 Thymeleaf 完全替代 JSP
+    1. 通过 xmlns="http://www.thymeleaf.org" 命名空间，将镜头页面转换为动态的视图，需要进行动态处理的元素将使用 "th:" 作为前缀
+    2. 通过 @{} 引用 Web 静态资源，这在 JSP 中是极易出错的
+-->
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script th:src="@{jquery.min.js}" type="text/javascript"></script>
+    <!--
+        在项目中，我们经常需要在 JavaScript 中访问 model 的值，在 Thymeleaf 中实现的代码如下所示
+            1.通过 th:inline="javascript" 添加到 script 标签，这样 JavaScript 代码即可访问 model 中的属性
+            2.通过 "[[${}]]" 格式获得实际的值
+    -->
+    <script th:inline="javascript">
+        alert([[${person.name}]]);
+        $(function(){
+            alert("sdf");
+        });
+    </script>
+</head>
+<body>
+    <h1>后台传入的名字是 ： <span th:text="${person.name}">默认名字</span></h1>
+    <!--
+    此处为判断 后台传入的 people 集合是否为空 那么如果为空的话 这个 div 将不会显示
+    Thymeleaf 支持 > < >= <= == != 作为比较条件，同时也支持将 SpringEL 表达式语言用于条件中
+-->
+<div th:if="${not #lists.isEmpty(people)}">
+    People 列表
+    <ul>
+        <!--使用 th:each 来做循环迭代 （th:each="p:${people}"）,p 作为迭代元素来使用，然后访问迭代元素中的属性-->
+        <li th:each="p:${people}">
+            <span th:text="${p.name}">默认名字</span>
+            <span th:text="${p.age}">默认年龄</span><img th:src="@{background.png}"/>
+        </li>
+    </ul>
+
+</div>
+</body>
+</html>

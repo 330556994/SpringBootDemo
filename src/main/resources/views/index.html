@@ -1,0 +1,27 @@
+
+
+<!--
+    JSP 在内嵌的 Servlet 容器上运行会有一些问题  内嵌的 Tomcat jetty 不支持以 jar 形式运行 JSP,Undertow 不支持 JSP
+    SpringBoot 提供了大量的模板引擎 包含有：FreeMaker， Groovy，Thymeleaf，Velocity 和 Mustache ,
+    SpringBoot 推荐使用 Thymeleaf 作为模板引擎，因为 Thymeleaf 提供了完美的 Spring MVC 的支持
+    Thymeleaf 是一个 Java 类库，他是一个 xml/xhtml/html5 的模板引擎，可以作为 MVC 的 Web 应用的 View 层
+    Thymeleaf 还提供了额外的模块与 Spring MVC 集成，所以我们可以使用 Thymeleaf 完全替代 JSP
+    1. 通过 xmlns="http://www.thymeleaf.org" 命名空间，将镜头页面转换为动态的视图，需要进行动态处理的元素将使用 "th:" 作为前缀
+    2. 通过 @{} 引用 Web 静态资源，这在 JSP 中是极易出错的
+-->
+<!doctype html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/jquery.min.js"></script>
+    <script>
+        $(function(){
+            alert("sdf");
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
