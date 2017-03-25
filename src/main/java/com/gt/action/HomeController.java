@@ -29,8 +29,6 @@ public class HomeController {
     @Value("${gongtao.age}")
     private int gAge;
 
-
-
     @RequestMapping("/home")
     public String hello(Model model){
         Person person = new Person("gongtao",10);
@@ -51,7 +49,6 @@ public class HomeController {
         Person person = new Person("gongtao",grade);
         model.addAttribute("person",person);
         return "image";
-
     }
 
 }
